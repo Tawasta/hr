@@ -37,4 +37,3 @@
         'views/hr_expense_line.xml',
     ],
 }
-
