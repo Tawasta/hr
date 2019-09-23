@@ -23,4 +23,3 @@ class HrExpenseSheet(models.Model):
         string='Unit Price',
         related='expense_line_ids.unit_amount',
         )
-
