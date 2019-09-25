@@ -12,13 +12,14 @@
 	    <xpath expr="//field[@name='expense_line_ids']" position="attributes">
 	    	<attribute name="widget"></attribute>
 		<attribute name="context">{'default_state': 'draft'}</attribute>
-		<attribute name="attrs">{'readonly': [('state', 'not in', ('draft','cancel'))]}</attribute>
+		<!--<attribute name="attrs">{'readonly': [('state', 'not in', ('draft','cancel'))]}</attribute>-->
 	    </xpath>
+            <xpath expr="//field[@name='expense_line_ids']/tree/field[@name='name']" position="before">
+		<field name="product_id"/>
+            </xpath>
             <xpath expr="//field[@name='expense_line_ids']/tree/field[@name='name']" position="after">
                 <field name="quantity"/>
                 <field name="unit_amount"/>
-		<field name="product_id"/>
-		<field name="state"/>
             </xpath>
             <xpath expr="//button[@name='approve_expense_sheets']" position="before">
 		<button name="submit_expenses" states="draft" string="Submit to Manager" type="object" groups="hr_expense.group_hr_expense_user" class="oe_highlight o_expense_submit"/>
