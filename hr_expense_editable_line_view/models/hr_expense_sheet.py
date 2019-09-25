@@ -17,9 +17,17 @@ class HrExpenseSheet(models.Model):
         ('post', 'Posted'),
         ('done', 'Paid'),
         ('cancel', 'Refused'),
+        ('refused', 'Refused'),
         ],
         default='draft',
         )
+
+    @api.multi
+    def write(self, vals):
+        res = super(HrExpenseSheet, self).write(vals)
+        for line in self.expense_line_ids:
+            line.state = self.state
+        return res
 
     @api.multi
     def reset_expense_sheets(self):
@@ -30,12 +38,6 @@ class HrExpenseSheet(models.Model):
         return
 
     @api.multi
-    @api.onchange('state, product_id')
-    def onchange_line_state(self):
-        for line in self.expense_line_ids:
-            line.state = self.state
-
-    @api.multi
     def submit_expenses(self):
         hr_expense = self.env['hr.expense']
         if any(expense.state != 'draft' for expense in self):
@@ -44,3 +46,19 @@ class HrExpenseSheet(models.Model):
             raise UserError(_("You cannot report expenses for different employees in the same report!"))
         return self.write({'state': 'submit'})
 
+class HrExpense(models.Model):
+
+    _inherit = 'hr.expense'
+
+    state = fields.Selection(selection=[
+        ('draft', 'To Submit'),
+        ('reported', 'Reported'),
+        ('submit', 'Submitted'),
+        ('approve', 'Approved'),
+        ('post', 'Posted'),
+        ('done', 'Paid'),
+        ('cancel', 'Refused'),
+        ('refused', 'Refused'),
+        ],
+        default='draft',
+        )
