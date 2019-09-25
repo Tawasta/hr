@@ -41,22 +41,6 @@ class HrExpenseSheet(models.Model):
         if any(expense.state != 'draft' for expense in self):
             raise UserError(_("You cannot report twice the same line!"))
         if len(self.mapped('employee_id')) != 1:
-            raise UserError(_("You cannot report expenses for different employees in the same report!"))
+            raise UserError(_("""You cannot report expenses
+                for different employees in the same report!"""))
         return self.write({'state': 'submit'})
-
-class HrExpense(models.Model):
-
-    _inherit = 'hr.expense'
-
-    state = fields.Selection(selection=[
-        ('draft', 'To Submit'),
-        ('reported', 'Reported'),
-        ('submit', 'Submitted'),
-        ('approve', 'Approved'),
-        ('post', 'Posted'),
-        ('done', 'Paid'),
-        ('cancel', 'Refused'),
-        ('refused', 'Refused'),
-        ],
-        default='draft',
-        )
