@@ -34,7 +34,7 @@ class HrExpenseSheet(models.Model):
         self.write({'state': 'draft'})
         for line in self.expense_line_ids:
             line.write({'state': 'draft'})
-        return
+        return res
 
     @api.multi
     def submit_expenses(self):
