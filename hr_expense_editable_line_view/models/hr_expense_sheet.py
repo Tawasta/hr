@@ -24,10 +24,9 @@ class HrExpenseSheet(models.Model):
 
     @api.multi
     def write(self, vals):
-        res = super(HrExpenseSheet, self).write(vals)
         for line in self.expense_line_ids:
             line.state = self.state
-        return res
+        return super(HrExpenseSheet, self).write(vals)
 
     @api.multi
     def reset_expense_sheets(self):
@@ -39,7 +38,6 @@ class HrExpenseSheet(models.Model):
 
     @api.multi
     def submit_expenses(self):
-        hr_expense = self.env['hr.expense']
         if any(expense.state != 'draft' for expense in self):
             raise UserError(_("You cannot report twice the same line!"))
         if len(self.mapped('employee_id')) != 1:
