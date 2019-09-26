@@ -17,15 +17,15 @@ class HrExpenseSheet(models.Model):
         ('post', 'Posted'),
         ('done', 'Paid'),
         ('cancel', 'Refused'),
-        ('refused', 'Refused'),
         ],
         default='draft',
         )
 
     @api.multi
     def write(self, vals):
-        for line in self.expense_line_ids:
-            line.state = self.state
+        if self.state:
+            for line in self.expense_line_ids:
+                line.state = self.state
         return super(HrExpenseSheet, self).write(vals)
 
     @api.multi
