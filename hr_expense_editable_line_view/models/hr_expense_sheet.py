@@ -38,9 +38,4 @@ class HrExpenseSheet(models.Model):
 
     @api.multi
     def submit_expenses(self):
-        if any(expense.state != 'draft' for expense in self):
-            raise UserError(_("You cannot report twice the same line!"))
-        if len(self.mapped('employee_id')) != 1:
-            raise UserError(_("""You cannot report expenses
-                for different employees in the same report!"""))
         return self.write({'state': 'submit'})
