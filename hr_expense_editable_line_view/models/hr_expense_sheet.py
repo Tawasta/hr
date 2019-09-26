@@ -22,6 +22,17 @@ class HrExpenseSheet(models.Model):
         )
 
     @api.multi
+    def write(self, vals):
+        res = super(HrExpenseSheet, self).write(vals)
+        if vals.get('state', self.state):
+            for line in self.expense_line_ids:
+                line.state = vals.get('state', self.state)
+        if vals.get('state', self.state) == 'cancel':
+            for line in self.expense_line_ids:
+                line.state = 'draft'
+        return res
+
+    @api.multi
     def reset_expense_sheets(self):
         res = super(HrExpenseSheet, self).reset_expense_sheets()
         self.write({'state': 'draft'})
