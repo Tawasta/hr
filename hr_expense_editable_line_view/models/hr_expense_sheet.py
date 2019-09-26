@@ -10,7 +10,6 @@ class HrExpenseSheet(models.Model):
 
     state = fields.Selection(selection=[
         ('draft', 'To Submit'),
-        ('reported', 'Reported'),
         ('submit', 'Submitted'),
         ('approve', 'Approved'),
         ('post', 'Posted'),
@@ -19,17 +18,6 @@ class HrExpenseSheet(models.Model):
         ],
         default='draft',
         )
-
-    @api.multi
-    def write(self, vals):
-        res = super(HrExpenseSheet, self).write(vals)
-        if vals.get('state', self.state):
-            for line in self.expense_line_ids:
-                line.state = vals.get('state', self.state)
-        if vals.get('state', self.state) == 'cancel':
-            for line in self.expense_line_ids:
-                line.state = 'draft'
-        return res
 
     @api.multi
     def reset_expense_sheets(self):
