@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 
-from odoo import api, fields, models
+from odoo import api, models
 
 
 class HrExpense(models.Model):
