@@ -76,7 +76,7 @@ class Employee(models.Model):
             daily_hours = float(self.weekly_working_time) / 5
 
             hours_worked = self.get_hours_worked(today)
-            hours_needed = self.get_hours_needed(date_to_check, today, \
+            hours_needed = self.get_hours_needed(date_to_check, today,
                 daily_hours)
 
             self.hour_balance = hours_worked - hours_needed
@@ -96,7 +96,7 @@ class Employee(models.Model):
     )
 
     hour_balance_start = fields.Date(string='Hour Balance Start Date',
-        help='Date from which onwards the hour balance is calculated. Set
+        help='Date from which onwards the hour balance is calculated. Set \
         this as the date when the user started filling out timesheets.')
     hour_balance = fields.Float(string='Hour Balance',
         compute=_get_hour_balance, store=True)
