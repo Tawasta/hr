@@ -53,7 +53,7 @@ class Employee(models.Model):
         return hours_needed
 
     @api.depends('weekly_working_time', 'hour_balance_start', 'timesheet_ids',
-                'timesheet_ids.timesheet_ids')
+                    'timesheet_ids.timesheet_ids')
     def _get_hour_balance(self):
         '''
         Calculates how many hours the employee has logged from
@@ -89,8 +89,7 @@ class Employee(models.Model):
         self.show_balance = self.user_id.id == self.env.uid and True or False
 
     weekly_working_time = fields.Selection(
-        [('30', '30'),
-        ('37.5', '37,5'),
+        [('30', '30'), ('37.5', '37,5'),
         ('hour_worker', 'No fixed working time')], 'Weekly working time (h)',
         default='hour_worker'
     )
