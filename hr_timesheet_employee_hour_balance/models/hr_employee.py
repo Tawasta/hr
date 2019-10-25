@@ -53,7 +53,7 @@ class Employee(models.Model):
         return hours_needed
 
     @api.depends('weekly_working_time', 'hour_balance_start', 'timesheet_ids',
-                    'timesheet_ids.timesheet_ids')
+                 'timesheet_ids.timesheet_ids')
     def _get_hour_balance(self):
         '''
         Calculates how many hours the employee has logged from
@@ -96,8 +96,8 @@ class Employee(models.Model):
 
     hour_balance_start = fields.Date(
         string='Hour Balance Start Date',
-        help='Date from which onwards the hour balance is calculated. Set \
-        this as the date when the user started filling out timesheets.'
+        help=('Date from which onwards the hour balance is calculated. Set '
+              'this as the date when the user started filling out timesheets.')
     )
 
     hour_balance = fields.Float(
