@@ -6,7 +6,6 @@ class Employee(models.Model):
 
     _inherit = 'hr.employee'
 
-
     def get_hours_worked(self, today):
         ''' Fetch all timesheet lines the user has logged between calculation
         start date and today, and get the sum of hours.
@@ -27,8 +26,8 @@ class Employee(models.Model):
                          ('date', '>=', self.hour_balance_start),
                          ('date', '<=', today_str)])
 
-        hours_worked = sum(timesheet_line.unit_amount for timesheet_line in \
-            timesheet_line_ids)
+        hours_worked = sum(timesheet_line.unit_amount for timesheet_line in
+                timesheet_line_ids)
 
         return hours_worked
 
@@ -53,7 +52,7 @@ class Employee(models.Model):
         return hours_needed
 
     @api.depends('weekly_working_time', 'hour_balance_start', 'timesheet_ids',
-        'timesheet_ids.timesheet_ids')
+            'timesheet_ids.timesheet_ids')
     def _get_hour_balance(self):
         '''
         Calculates how many hours the employee has logged from
@@ -68,7 +67,7 @@ class Employee(models.Model):
         have a fixed weekly working time.
         '''
         if self.weekly_working_time != 'hour_worker' and \
-            self.hour_balance_start:
+                self.hour_balance_start:
 
             date_to_check = datetime.datetime.strptime(str(
                 self.hour_balance_start), "%Y-%m-%d").date()
@@ -77,7 +76,7 @@ class Employee(models.Model):
 
             hours_worked = self.get_hours_worked(today)
             hours_needed = self.get_hours_needed(date_to_check, today,
-                daily_hours)
+                    daily_hours)
 
             self.hour_balance = hours_worked - hours_needed
         else:
@@ -87,7 +86,6 @@ class Employee(models.Model):
     def _get_show_balance(self):
         self.show_balance = self.user_id.id == self.env.uid and True or False
 
-
     weekly_working_time = fields.Selection(
         [('30', '30'),
          ('37.5', '37,5'),
@@ -96,17 +94,17 @@ class Employee(models.Model):
     )
 
     hour_balance_start = fields.Date(string='Hour Balance Start Date',
-        help='Date from which onwards the hour balance is calculated. Set \
-        this as the date when the user started filling out timesheets.')
+            help='Date from which onwards the hour balance is calculated. Set \
+            this as the date when the user started filling out timesheets.')
     hour_balance = fields.Float(string='Hour Balance',
-        compute=_get_hour_balance, store=True)
+            compute=_get_hour_balance, store=True)
 
     # Fill the existing m2o relation between employees and timesheets so that
     # it can be used in api.depends
     timesheet_ids = fields.One2many(comodel_name='hr_timesheet.sheet',
-        inverse_name='employee_id', string='Timesheets')
+            inverse_name='employee_id', string='Timesheets')
 
     # A helper field that is used to restrict that the user can only see their
     # own hour balance in the employee form view
     show_balance = fields.Boolean(string='Show Hour Balance',
-        compute=_get_show_balance)
+            compute=_get_show_balance)
