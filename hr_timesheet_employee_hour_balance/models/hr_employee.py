@@ -91,7 +91,7 @@ class Employee(models.Model):
     weekly_working_time = fields.Selection(
         [('30', '30'), ('37.5', '37,5'),
          ('hour_worker', 'No fixed working time')], 'Weekly working time (h)',
-         default='hour_worker'
+          default='hour_worker'
     )
 
     hour_balance_start = fields.Date(
