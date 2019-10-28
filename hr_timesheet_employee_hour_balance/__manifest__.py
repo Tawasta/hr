@@ -20,16 +20,7 @@
 
 {
     'name': 'Employee Hour Balance',
-    'category': 'HR',
-    'version': '12.0.1.0.0',
-    'website': 'http://www.tawasta.fi',
-    'author': 'Oy Tawasta Technologies Ltd.',
-    'license': 'AGPL-3',
-    'depends': [
-        'hr_timesheet_sheet',
-        'resource',
-    ],
-    'description': """
+    'summary': """
 Employee Hour Balance
 =====================
  * Shows the hour balance for each employee from a certain date onwards, based
@@ -37,6 +28,17 @@ Employee Hour Balance
  * Adds two new groups, one for seeing own balance, and another for seeing all
  employees' balances
     """,
+    'version': '12.0.1.0.0',
+    'category': 'HR',
+    'website': 'http://www.tawasta.fi',
+    'author': 'Oy Tawasta Technologies Ltd.',
+    'license': 'AGPL-3',
+    'application': False,
+    'installable': True,
+    'depends': [
+        'hr_timesheet_sheet',
+        'resource',
+    ],
     'data': [
         'views/hr_employee.xml',
     ],
