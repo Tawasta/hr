@@ -84,7 +84,6 @@ class Employee(models.Model):
         else:
             self.hour_balance = 0
 
-    @api.one
     def _get_show_balance(self):
         self.show_balance = self.user_id.id == self.env.uid and True or False
 
