@@ -15,10 +15,10 @@ class Employee(models.Model):
 
         today_str = datetime.datetime.strftime(today, '%Y-%m-%d')
 
-        ''' timesheet_line_ids = self.env['hr.analytic.timesheet'].search(args=[
-            ('user_id', '=', self.user_id.id),
-            ('date', '>=', self.hour_balance_start),
-            ('date', '<=', today_str)] '''
+#         timesheet_line_ids = self.env['hr.analytic.timesheet'].search(args=[
+#             ('user_id', '=', self.user_id.id),
+#             ('date', '>=', self.hour_balance_start),
+#             ('date', '<=', today_str)]
 
         timesheet_line_ids = self.env['hr_timesheet.sheet.line'].\
             search(args=[('employee_id', '=', self.id),
@@ -58,9 +58,9 @@ class Employee(models.Model):
         hour_balance_start date onwards and compares it to how
         many hours they should have logged according to their
         weekly working hour time. The calculation is redone each
-        time a user's timesheet gets updated. """
+        time a user's timesheet gets updated.
 
-        """ Don't calculate if required employee info is missing or they do
+        Don't calculate if required employee info is missing or they do
         not have a fixed weekly working time. """
         if self.weekly_working_time != 'hour_worker' and \
                 self.hour_balance_start:
