@@ -15,12 +15,11 @@ class Employee(models.Model):
 
         today_str = datetime.datetime.strftime(today, '%Y-%m-%d')
 
-        '''
-        timesheet_line_ids = self.env['hr.analytic.timesheet'].search(args=[
+        ''' timesheet_line_ids = self.env['hr.analytic.timesheet'].search(args=[
             ('user_id', '=', self.user_id.id),
             ('date', '>=', self.hour_balance_start),
-            ('date', '<=', today_str)])
-        '''
+            ('date', '<=', today_str)] '''
+
         timesheet_line_ids = self.env['hr_timesheet.sheet.line'].\
             search(args=[('employee_id', '=', self.id),
                          ('date', '>=', self.hour_balance_start),
@@ -33,13 +32,13 @@ class Employee(models.Model):
         return hours_worked
 
     def get_hours_needed(self, date_to_check, today, daily_hours):
-        ''' Iterate through all dates from start date to today. If the date
+        """ Iterate through all dates from start date to today. If the date
         is not Saturday or Sunday, increase the hours_needed counter by the
         employee's weekly working hours divided by number of weekly working
         days(=5).
 
         Override this function if there is need for more complex calculation
-        that takes into account e.g. public holidays. '''
+        that takes into account e.g. public holidays. """
 
         hours_needed = 0
 
@@ -55,18 +54,14 @@ class Employee(models.Model):
     @api.depends('weekly_working_time', 'hour_balance_start', 'timesheet_ids',
                  'timesheet_ids.timesheet_ids')
     def _get_hour_balance(self):
-        '''
-        Calculates how many hours the employee has logged from
+        """ Calculates how many hours the employee has logged from
         hour_balance_start date onwards and compares it to how
         many hours they should have logged according to their
         weekly working hour time. The calculation is redone each
-        time a user's timesheet gets updated.
-        '''
+        time a user's timesheet gets updated. """
 
-        '''
-        Don't calculate if required employee info is missing or they do not
-        have a fixed weekly working time.
-        '''
+        """ Don't calculate if required employee info is missing or they do
+        not have a fixed weekly working time. """
         if self.weekly_working_time != 'hour_worker' and \
                 self.hour_balance_start:
 
