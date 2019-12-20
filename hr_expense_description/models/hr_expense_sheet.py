@@ -11,4 +11,3 @@ class HrExpenseSheet(models.Model):
     expense_description = fields.Text(
         string='Expense details',
     )
-
