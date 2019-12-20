@@ -26,4 +26,3 @@ msgstr "Kuluraportti"
 #: model:ir.model.fields,field_description:hr_expense_description.field_hr_expense_sheet_expense_description
 msgid "Expense details"
 msgstr "Kulujen yksityiskohtia"
-
