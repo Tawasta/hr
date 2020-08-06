@@ -13,9 +13,9 @@ class HrAttendance(models.Model):
                         submenu=False):
         """Changes all fields to readonly for my_attendances-group"""
         res = super(HrAttendance, self).fields_view_get(view_id=view_id,
-                                                     view_type=view_type,
-                                                     toolbar=toolbar,
-                                                     submenu=submenu)
+                                                        view_type=view_type,
+                                                        toolbar=toolbar,
+                                                        submenu=submenu)
 
         if self.env.user.has_group(
                 'hr_attendance_my_attendances.my_attendances') and \
