@@ -28,6 +28,9 @@
     "license": "AGPL-3",
     "application": False,
     "installable": True,
-    "depends": ["hr_timesheet_attendance_hour_balance", "web_tree_dynamic_colored_field"],
+    "depends": [
+        "hr_timesheet_attendance_hour_balance",
+        "web_tree_dynamic_colored_field"
+    ],
     "data": ["views/hr_timesheet_sheet_view.xml"],
 }
